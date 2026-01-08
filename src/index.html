@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Critical: Preconnect hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://scripts.converteai.net" crossorigin>
+  <link rel="preconnect" href="https://cdn.converteai.net" crossorigin>
+  <link rel="preconnect" href="https://api.vturb.com.br" crossorigin>
+
+  <!-- Deferred resources -->
+  <link rel="dns-prefetch" href="https://pay.hotmart.com">
+  <link rel="dns-prefetch" href="https://www.clarity.ms">
+
+  <!-- Preload font -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"></noscript>
+
+  <!-- Critical CSS inline -->
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:'Inter',-apple-system,sans-serif;scroll-behavior:smooth}
+    body{background:linear-gradient(180deg,#050505 0%,#0d0d0d 100%);color:#fff;min-height:100vh;overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(255,107,53,0.15) 0%,transparent 50%);z-index:0;pointer-events:none}
+
+    h1,h2,h3{font-weight:900;line-height:1.15;letter-spacing:-0.02em}
+    h1{font-size:clamp(1.5rem,5vw,4rem)}
+    h2{font-size:clamp(1.25rem,4vw,3rem)}
+
+    .container{max-width:80rem;margin:0 auto;padding:0 1rem}
+    section{position:relative;z-index:1}
+
+    .text-gradient{background:linear-gradient(135deg,#ff6b35 0%,#f7931e 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
+
+    .card-glow{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(10px);transition:all 0.3s ease;border-radius:0.75rem}
+    .card-glow:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,107,53,0.2);transform:translateY(-2px)}
+
+    .btn-primary{background:linear-gradient(135deg,#ff6b35 0%,#f7931e 100%);color:#fff;border:none;padding:1.25rem 2rem;border-radius:0.75rem;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.3s ease;display:inline-block;text-decoration:none;text-align:center}
+    .btn-primary:hover{transform:scale(1.02);box-shadow:0 20px 40px rgba(255,107,53,0.3)}
+
+    header{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
+    header .bg{position:absolute;inset:0;background:rgba(8,8,8,0.8)}
+
+    .vsl-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:1rem;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
+    vturb-smartplayer{display:block;width:100%;height:100%}
+
+    .grid{display:grid;gap:1rem}
+    .grid-2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    .grid-3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+
+    .py-20{padding-top:5rem;padding-bottom:5rem}
+    .mb-12{margin-bottom:3rem}
+    .mb-8{margin-bottom:2rem}
+    .mb-4{margin-bottom:1rem}
+
+    .text-center{text-align:center}
+    .hidden{display:none}
+
+    .loading{opacity:0;transform:translateY(40px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .loaded{opacity:1;transform:translateY(0)}
+
+    [data-carousel]{position:relative;overflow:hidden}
+    [data-carousel-track]{display:flex;gap:1rem;transition:transform 0.3s ease-out;will-change:transform}
+    [data-carousel-slide]{flex-shrink:0;width:100%}
+    [data-carousel-prev],[data-carousel-next]{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,107,53,0.9);color:#fff;border:none;width:2.5rem;height:2.5rem;border-radius:50%;cursor:pointer;z-index:10;font-size:1.25rem;font-weight:700}
+    [data-carousel-prev]{left:1rem}
+    [data-carousel-next]{right:1rem}
+    [data-carousel-prev]:hover,[data-carousel-next]:hover{background:#ff6b35}
+
+    @media(min-width:640px){.sm\:grid-2{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.lg\:grid-3{grid-template-columns:repeat(3,1fr)}}
+
+    /* Module cards responsive - Mobile First */
+    .module-card{max-width:800px;margin:0 auto;overflow:hidden}
+    .module-card-inner{display:flex;flex-direction:column;gap:0;align-items:stretch}
+    .module-card-image{background:rgba(255,107,53,0.1);width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .module-card-content{padding:1.25rem;flex:1}
+
+    @media(min-width:640px){
+      .module-card-inner{flex-direction:row}
+      .module-card-image{min-width:240px;width:240px;aspect-ratio:auto}
+    }
+  </style>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <title>Comunicação: O Discurso do Líder - Fernando Machado</title>
+  <meta name="description" content="Descubra como dominar a comunicação que transforma carreiras. Programa de comunicação estratégica com Fernando Machado, ex-âncora do SBT.">
+
+  <!--Deferred Analytics -->
+  <script>
+    function loadClarity(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","rfcyp9syov")}
+    if('requestIdleCallback' in window){requestIdleCallback(loadClarity,{timeout:4000})}else{setTimeout(loadClarity,3000)}
+  </script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="bg"></div>
+    <div class="container" style="position:relative;display:flex;align-items:center;justify-content:space-between;padding-top:1rem;padding-bottom:1rem">
+      <span style="font-size:1.125rem;font-weight:700;color:#ff6b35">COMUNICAÇÃO</span>
+      <span style="font-size:0.875rem;color:rgba(255,255,255,0.6)">O Discurso do Líder</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" style="min-height:100vh;padding-top:8rem;padding-bottom:3rem">
+    <div class="container">
+      <div style="max-width:72rem;margin:0 auto">
+        <h1 class="text-center mb-4">
+          <span style="color:rgba(255,255,255,0.9)">A comunicação é a</span>
+          <span class="text-gradient" style="display:block;margin-top:0.5rem">única arma que você tem<br>para jogar esse jogo</span>
+        </h1>
+
+        <p class="text-center mb-8" style="color:rgba(255,255,255,0.6);max-width:48rem;margin-left:auto;margin-right:auto">
+          Assista ao vídeo e descubra como uma pessoa que falava "poblema" virou apresentador de TV — e como você pode dominar essa habilidade de forma prática.
+        </p>
+
+        <div class="vsl-container mb-12" style="max-width:64rem;margin:0 auto">
+          <vturb-smartplayer id="vid-693170b030e3e1f3170aac15"></vturb-smartplayer>
+        </div>
+
+        <div class="text-center mb-12">
+          <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390" style="display:inline-block;width:100%;max-width:40rem">
+            INICIAR MINHA JORNADA →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section id="problems" class="py-20 loading" style="background:rgba(255,255,255,0.02)">
+    <div class="container" style="max-width:72rem">
+      <h2 class="text-center mb-12">
+        Você reconhece <span class="text-gradient">algum desses cenários?</span>
+      </h2>
+
+      <div class="grid sm:grid-2 mb-12" style="gap:1.5rem">
+        <div class="card-glow" style="padding:1.5rem;text-align:center">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+            <span style="font-size:1.5rem">🎤</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">O Travado</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Você tem conhecimento profundo mas trava na hora de apresentar para o board ou investidores</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem;text-align:center">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+            <span style="font-size:1.5rem">👻</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">O Invisível</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Pessoas menos qualificadas conseguem promoções porque sabem se vender melhor</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem;text-align:center">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+            <span style="font-size:1.5rem">📈</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">O Técnico</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Sua equipe não entende sua visão e você precisa repetir instruções</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem;text-align:center">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+            <span style="font-size:1.5rem">👁️</span>
+          </div>
+          <h3 style="font-size:1.rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">O Inseguro</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Antes de cada apresentação importante, você perde noites de sono por medo de errar</p>
+        </div>
+      </div>
+
+      <div class="text-center" style="max-width:48rem;margin:0 auto">
+        <blockquote style="font-size:1.125rem;font-style:italic;margin-bottom:2rem;color:rgba(255,255,255,0.8)">
+          "O medo de falar em público é o maior medo da humanidade.<br>Maior que o medo da morte."
+        </blockquote>
+
+        <div class="card-glow" style="padding:1.5rem;display:inline-block">
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.7)">
+            Não adianta ficar reclamando e nem mesmo ficar assistindo outras pessoas que sabem menos que você ter mais sucesso que você. <span class="text-gradient" style="font-weight:700">O que elas têm? Coragem.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution Section -->
+  <section id="solution" class="py-20 loading">
+    <div class="container" style="max-width:64rem">
+      <div class="text-center mb-12">
+        <div style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.5rem 1rem;border-radius:9999px;margin-bottom:1.5rem">
+          <span>✓</span>
+          <span style="font-size:0.875rem;font-weight:700">POR QUE NÃO É UM CURSO COMUM</span>
+        </div>
+
+        <h2 class="mb-4">
+          Transformar Técnica em<br>
+          <span class="text-gradient">Resultado Real</span>
+        </h2>
+
+        <p style="color:rgba(255,255,255,0.6);max-width:48rem;margin:0 auto">
+          Não é teoria acadêmica. É o que funcionou em 13 anos de TV ao vivo e <strong style="color:#ff6b35">R$30 milhões em vendas geradas</strong>.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-3 mb-12">
+        <div class="card-glow" style="padding:1.5rem;text-align:center">
+          <div style="width:2.5rem;height:2.5rem;background:rgba(255,107,53,0.1);border-radius:9999px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem">
+            <span style="color:#ff6b35;font-weight:700">1</span>
+          </div>
+          <p style="font-size:0.875rem;font-weight:500">Técnica comprovada em milhares de apresentações ao vivo</p>
+        </div>
+        <div class="card-glow" style="padding:1.5rem;text-align:center">
+          <div style="width:2.5rem;height:2.5rem;background:rgba(255,107,53,0.1);border-radius:9999px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem">
+            <span style="color:#ff6b35;font-weight:700">2</span>
+          </div>
+          <p style="font-size:0.875rem;font-weight:500">Prático e direto: 125 minutos para dominar o essencial</p>
+        </div>
+        <div class="card-glow" style="padding:1.5rem;text-align:center">
+          <div style="width:2.5rem;height:2.5rem;background:rgba(255,107,53,0.1);border-radius:9999px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.75rem">
+            <span style="color:#ff6b35;font-weight:700">3</span>
+          </div>
+          <p style="font-size:0.875rem;font-weight:500">Experiência real de TV, não simulação de sala de aula</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
+          QUERO DOMINAR ESSA HABILIDADE →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transformation Section -->
+  <section id="transformation" class="py-20 loading" style="background:rgba(255,255,255,0.02)">
+    <div class="container" style="max-width:72rem">
+      <h2 class="text-center mb-4">
+        O Que Você Vai <span class="text-gradient">Dominar</span>
+      </h2>
+
+      <p class="text-center mb-12" style="color:rgba(255,255,255,0.6);max-width:48rem;margin-left:auto;margin-right:auto">
+        Transformações reais que você vai experimentar ao aplicar esse método
+      </p>
+
+      <div class="grid lg:grid-3 mb-12" style="gap:1.5rem">
+        <div class="card-glow" style="padding:1.5rem">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <span style="font-size:1.5rem">💪</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">Confiança Inabalável</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Apresente para qualquer plateia sem medo ou insegurança</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <span style="font-size:1.5rem">💰</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">Vendas Multiplicadas</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Convença investidores e clientes com discurso estruturado</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <span style="font-size:1.5rem">👥</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">Equipe Engajada</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Inspire sua equipe com comunicação clara e motivadora</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <span style="font-size:1.5rem">🤝</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">Networking Poderoso</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Seja lembrado e recomendado por quem te ouve</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <span style="font-size:1.5rem">⚡</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">Improviso Dominado</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Lidere situações inesperadas com elegância</p>
+        </div>
+
+        <div class="card-glow" style="padding:1.5rem">
+          <div style="width:3rem;height:3rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+            <span style="font-size:1.5rem">🎯</span>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:#ff6b35">Autoridade Percebida</h3>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6)">Conquiste respeito e credibilidade ao falar</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
+          QUERO TRANSFORMAR MINHA COMUNICAÇÃO →
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Instructor Section -->
+  <section id="instructor" class="py-20 loading">
+    <div class="container" style="max-width:64rem">
+      <h2 class="text-center mb-12">
+        Quem Está Por Trás dos<br>
+        <span class="text-gradient">Resultados Comprovados</span>
+      </h2>
+
+      <div style="max-width:72rem;margin:0 auto;display:grid;grid-template-columns:1fr;gap:3rem 4rem;align-items:center">
+        <div style="display:grid;grid-template-columns:1fr;gap:3rem 4rem;align-items:center">
+          <!-- Foto do Fernando -->
+          <div style="position:relative;max-width:40rem;margin:0 auto;width:100%">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,107,53,0.1),transparent);border-radius:0.5rem;filter:blur(2rem)"></div>
+            <img src="/assets/images/fernando-palco.png" alt="Fernando Machado" loading="lazy" style="position:relative;border-radius:0.5rem;box-shadow:0 25px 50px rgba(0,0,0,0.5);width:100%;filter:grayscale(1);border:1px solid rgba(255,255,255,0.05)">
+          </div>
+
+          <!-- Content -->
+          <div style="max-width:40rem;margin:0 auto;width:100%">
+            <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.5rem">Fernando Machado</h2>
+            <p style="color:#ff6b35;font-size:1.125rem;font-weight:500;margin-bottom:2rem">
+              Ex-Âncora SBT • CEO F5 Estratégia
+            </p>
+
+            <div style="color:rgba(255,255,255,0.6);font-size:0.875rem;line-height:1.6;margin-bottom:2rem">
+              <p style="color:rgba(255,255,255,0.9);font-weight:500;margin-bottom:1rem">
+                Uma pessoa que falava "poblema" virou apresentador de televisão nacional.
+              </p>
+
+              <p style="margin-bottom:1rem">
+                Por 13 anos, apresentou jornal ao vivo no SBT.
+                2 horas por dia. 5 dias por semana.
+                Zero margem para erro.
+              </p>
+
+              <p style="margin-bottom:1rem">
+                Começou narrando rodeios aos 15 anos.
+                Trabalha desde os 11.
+                Hoje é CEO da F5 Estratégia, uma das maiores
+                aceleradoras de marketing do Sul do Brasil.
+              </p>
+
+              <p style="margin-bottom:1rem">
+                Mais de <span style="color:#ff6b35;font-weight:500">R$ 30 milhões</span> em vendas geradas.
+                Mais de <span style="color:#ff6b35;font-weight:500">1.000 marcas</span> impactadas.
+              </p>
+
+              <p style="color:rgba(255,255,255,0.9);font-weight:500">
+                Agora, pela primeira vez, ele revela tudo
+                que aprendeu em 20 anos de comunicação profissional.
+              </p>
+            </div>
+
+            <!-- Badges -->
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+              <span style="border:1px solid rgba(255,107,53,0.3);color:rgba(255,107,53,0.8);padding:0.25rem 0.75rem;border-radius:0.25rem;font-size:0.75rem">13 Anos de TV</span>
+              <span style="border:1px solid rgba(255,107,53,0.3);color:rgba(255,107,53,0.8);padding:0.25rem 0.75rem;border-radius:0.25rem;font-size:0.75rem">CEO Grupo Empresarial</span>
+              <span style="border:1px solid rgba(255,107,53,0.3);color:rgba(255,107,53,0.8);padding:0.25rem 0.75rem;border-radius:0.25rem;font-size:0.75rem">R$ 30M Gerados</span>
+              <span style="border:1px solid rgba(255,107,53,0.3);color:rgba(255,107,53,0.8);padding:0.25rem 0.75rem;border-radius:0.25rem;font-size:0.75rem">1000+ Marcas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey Section -->
+  <section id="journey" class="py-20 loading" style="background:rgba(255,255,255,0.02)">
+    <div class="container" style="max-width:64rem">
+      <h2 class="text-center mb-12">
+        Da TV ao Vivo para<br>
+        <span class="text-gradient">Transformar Negócios</span>
+      </h2>
+
+      <div style="max-width:48rem;margin:0 auto">
+        <div class="card-glow" style="padding:2rem;margin-bottom:1.5rem">
+          <div style="display:flex;gap:1.5rem;align-items:start">
+            <div style="min-width:4rem;height:4rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center">
+              <span style="font-size:1.5rem;font-weight:900;color:#ff6b35">📺</span>
+            </div>
+            <div>
+              <h3 style="font-size:1.125rem;font-weight:700;color:#ff6b35;margin-bottom:0.5rem">13 anos no SBT</h3>
+              <p style="font-size:0.875rem;color:rgba(255,255,255,0.7)">Âncora de TV ao vivo, Teleton, coberturas internacionais. Milhares de horas improvisando e apresentando para milhões.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-glow" style="padding:2rem;margin-bottom:1.5rem">
+          <div style="display:flex;gap:1.5rem;align-items:start">
+            <div style="min-width:4rem;height:4rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center">
+              <span style="font-size:1.5rem;font-weight:900;color:#ff6b35">🏆</span>
+            </div>
+            <div>
+              <h3 style="font-size:1.125rem;font-weight:700;color:#ff6b35;margin-bottom:0.5rem">Prêmio Fatma de Jornalismo</h3>
+              <p style="font-size:0.875rem;color:rgba(255,255,255,0.7)">Reconhecimento pela excelência em comunicação e impacto gerado.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-glow" style="padding:2rem;margin-bottom:1.5rem">
+          <div style="display:flex;gap:1.5rem;align-items:start">
+            <div style="min-width:4rem;height:4rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center">
+              <span style="font-size:1.5rem;font-weight:900;color:#ff6b35">💼</span>
+            </div>
+            <div>
+              <h3 style="font-size:1.125rem;font-weight:700;color:#ff6b35;margin-bottom:0.5rem">CEO F5 Estratégia</h3>
+              <p style="font-size:0.875rem;color:rgba(255,255,255,0.7)">R$30 milhões em vendas geradas. 1.000+ marcas impactadas. Transformando comunicação em resultados.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-glow" style="padding:2rem">
+          <div style="display:flex;gap:1.5rem;align-items:start">
+            <div style="min-width:4rem;height:4rem;background:rgba(255,107,53,0.1);border-radius:0.75rem;display:flex;align-items:center;justify-content:center">
+              <span style="font-size:1.5rem;font-weight:900;color:#ff6b35">🎓</span>
+            </div>
+            <div>
+              <h3 style="font-size:1.125rem;font-weight:700;color:#ff6b35;margin-bottom:0.5rem">Especialista em Comunicação Estratégica</h3>
+              <p style="font-size:0.875rem;color:rgba(255,255,255,0.7)">Treinando executivos e líderes a usar comunicação como ferramenta de poder e resultado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modules Section -->
+  <section id="modules" class="py-20 loading">
+    <div class="container" style="max-width:72rem">
+      <div class="text-center mb-12">
+        <h2 class="mb-4">
+          O Programa que Transforma<br>
+          <span class="text-gradient">Sua Comunicação</span>
+        </h2>
+        <p style="color:rgba(255,255,255,0.6)">
+          5 módulos práticos + bônus | 125 minutos de conteúdo direto
+        </p>
+      </div>
+
+      <div data-carousel data-slides="1" data-loop class="mb-12">
+        <div data-carousel-track>
+          <div data-carousel-slide>
+            <div class="card-glow module-card">
+              <div class="module-card-inner">
+                <div class="module-card-image">
+                  <img src="/assets/images/modules/modulo1-fundacao.jpg" alt="Módulo 1 - Fundação" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
+                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">01</span>
+                </div>
+                <div class="module-card-content">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 1</span>
+                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">13 min</span>
+                  </div>
+                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">FUNDAÇÃO: CONTEÚDO REINA</h3>
+                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Técnicas de oratória são inúteis sem conteúdo relevante.</p>
+                  <ul style="list-style:none;padding:0;margin:0">
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Boas-vindas e apresentação</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Conteúdo - A Base de Tudo</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Nivelar por Baixo</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Não Seja Intelectual</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div data-carousel-slide>
+            <div class="card-glow module-card">
+              <div class="module-card-inner">
+                <div class="module-card-image">
+                  <img src="/assets/images/modules/modulo2-preparacao.jpg" alt="Módulo 2 - Preparação" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
+                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">02</span>
+                </div>
+                <div class="module-card-content">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 2</span>
+                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">17 min</span>
+                  </div>
+                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">PREPARAÇÃO: CHECKLIST ESTRATÉGICO</h3>
+                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Framework jornalístico de 20 anos para estruturar apresentações.</p>
+                  <ul style="list-style:none;padding:0;margin:0">
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ 5W1H e Pirâmide Invertida</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Monte Seu Roteiro</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Priorize Informação</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Storytelling na Prática</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div data-carousel-slide>
+            <div class="card-glow module-card">
+              <div class="module-card-inner">
+                <div class="module-card-image">
+                  <img src="/assets/images/modules/modulo3-apresentacao.jpg" alt="Módulo 3 - Apresentação" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
+                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">03</span>
+                </div>
+                <div class="module-card-content">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 3</span>
+                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">20 min</span>
+                  </div>
+                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">APRESENTAÇÃO: DESAFIANDO O MEDO</h3>
+                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Técnicas de TV ao vivo para dominar a ansiedade.</p>
+                  <ul style="list-style:none;padding:0;margin:0">
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ O Medo de Falar</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Preparação da Voz</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Linguagem Corporal</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Palavras Difíceis</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Abertura e Fechamento</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div data-carousel-slide>
+            <div class="card-glow module-card">
+              <div class="module-card-inner">
+                <div class="module-card-image">
+                  <img src="/assets/images/modules/modulo4-dominando.jpg" alt="Módulo 4 - Improviso" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
+                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">04</span>
+                </div>
+                <div class="module-card-content">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 4</span>
+                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">16 min</span>
+                  </div>
+                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">DOMINANDO O IMPROVISO</h3>
+                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">O que fazer quando dá tudo errado ao vivo.</p>
+                  <ul style="list-style:none;padding:0;margin:0">
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ O Famoso Branco</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Técnicas de Respiração</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Pare de Pedir Desculpas</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ A Arte do Improviso</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Lidando com Interrupções</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div data-carousel-slide>
+            <div class="card-glow module-card">
+              <div class="module-card-inner">
+                <div class="module-card-image">
+                  <img src="/assets/images/modules/modulo5-engajamento.jpg" alt="Módulo 5 - Engajamento" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
+                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">05</span>
+                </div>
+                <div class="module-card-content">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 5</span>
+                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">31 min</span>
+                  </div>
+                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">ENGAJAMENTO DE LIDERANÇA</h3>
+                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Como conquistar uma sala em 30 segundos.</p>
+                  <ul style="list-style:none;padding:0;margin:0">
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Criando Rapport</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Lidando com Objeções</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Posicionamento de Líder</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Comunicação Digital</li>
+                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Câmera e Gravação</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div data-carousel-slide>
+            <div class="card-glow module-card">
+              <div class="module-card-inner">
+                <div class="module-card-image">
+                  <span style="font-size:4rem;font-weight:900;color:#ff6b35">🎁</span>
+                </div>
+                <div class="module-card-content">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">BÔNUS</span>
+                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">12 min</span>
+                  </div>
+                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">SÍNTESE FINAL</h3>
+                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7)">Resumo executivo de tudo que você aprendeu para revisar sempre que precisar.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button data-carousel-prev>←</button>
+        <button data-carousel-next>→</button>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
+          ACESSAR O PROGRAMA COMPLETO →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Proof Section -->
+  <section id="social-proof" class="py-20 loading" style="background:rgba(255,255,255,0.02)">
+    <div class="container" style="max-width:72rem">
+      <h2 class="text-center mb-12">
+        Números Que <span class="text-gradient">Comprovam Resultados</span>
+      </h2>
+
+      <div class="grid lg:grid-3 mb-12" style="gap:2rem">
+        <div class="card-glow" style="padding:2rem;text-align:center">
+          <p style="font-size:2.5rem;font-weight:900" class="text-gradient">R$ 30M+</p>
+          <p style="font-size:1rem;color:rgba(255,255,255,0.7);margin-top:0.5rem">Em vendas geradas</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.5rem">Com técnicas de comunicação estratégica</p>
+        </div>
+
+        <div class="card-glow" style="padding:2rem;text-align:center">
+          <p style="font-size:2.5rem;font-weight:900" class="text-gradient">1.000+</p>
+          <p style="font-size:1rem;color:rgba(255,255,255,0.7);margin-top:0.5rem">Marcas impactadas</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.5rem">Clientes B2B e B2C em todo Brasil</p>
+        </div>
+
+        <div class="card-glow" style="padding:2rem;text-align:center">
+          <p style="font-size:2.5rem;font-weight:900" class="text-gradient">13 anos</p>
+          <p style="font-size:1rem;color:rgba(255,255,255,0.7);margin-top:0.5rem">De TV ao vivo</p>
+          <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.5rem">Âncora do SBT, cobertura internacional</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
+          QUERO ESSES RESULTADOS →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-20 loading" style="background:linear-gradient(180deg,rgba(255,107,53,0.05) 0%,transparent 100%)">
+    <div class="container" style="max-width:56rem">
+      <div class="text-center mb-12">
+        <h2 class="mb-4">
+          Invista em Você:<br>
+          <span class="text-gradient">A Comunicação Que Transforma Sua Carreira</span>
+        </h2>
+      </div>
+
+      <div class="card-glow" style="padding:3rem 2rem;border-radius:1rem;border:2px solid rgba(255,107,53,0.2);max-width:40rem;margin:0 auto 3rem">
+        <div style="text-align:center;margin-bottom:2rem">
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">A partir de</p>
+          <p style="font-size:3.5rem;font-weight:900;color:#ff6b35;line-height:1">10x R$ 57,00</p>
+          <p style="font-size:1rem;color:rgba(255,255,255,0.7);margin-top:1rem">
+            ou <strong style="color:#ff6b35">R$ 475,00</strong> à vista
+          </p>
+        </div>
+
+        <ul style="list-style:none;padding:0;margin:0 0 2rem;text-align:left">
+          <li style="display:flex;align-items:start;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="color:#ff6b35;font-size:1.25rem">✓</span>
+            <span style="font-size:0.875rem;color:rgba(255,255,255,0.8)">5 Módulos Completos (125 minutos)</span>
+          </li>
+          <li style="display:flex;align-items:start;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="color:#ff6b35;font-size:1.25rem">✓</span>
+            <span style="font-size:0.875rem;color:rgba(255,255,255,0.8)">Acesso por 1 Ano</span>
+          </li>
+          <li style="display:flex;align-items:start;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="color:#ff6b35;font-size:1.25rem">✓</span>
+            <span style="font-size:0.875rem;color:rgba(255,255,255,0.8)">Certificado Profissional</span>
+          </li>
+          <li style="display:flex;align-items:start;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="color:#ff6b35;font-size:1.25rem">✓</span>
+            <span style="font-size:0.875rem;color:rgba(255,255,255,0.8)">Assista quantas vezes quiser</span>
+          </li>
+          <li style="display:flex;align-items:start;gap:0.75rem;padding:0.75rem 0">
+            <span style="color:#ff6b35;font-size:1.25rem">✓</span>
+            <span style="font-size:0.875rem;color:rgba(255,255,255,0.8)">Técnicas comprovadas em TV ao vivo</span>
+          </li>
+        </ul>
+
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390" style="width:100%;font-size:1.25rem;padding:1.5rem">
+          🚀 COMEÇAR AGORA
+        </a>
+
+        <div style="text-align:center;margin-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;font-size:0.75rem;color:rgba(255,255,255,0.5)">
+          <span>🔒 Pagamento seguro Hotmart</span>
+          <span>🛡️ Garantia de 7 dias</span>
+          <span>💳 Parcelamento em até 12x</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guarantee Section -->
+  <section id="guarantee" class="py-20 loading">
+    <div class="container text-center" style="max-width:56rem">
+      <div style="width:4rem;height:4rem;background:rgba(255,107,53,0.1);border:2px solid rgba(255,107,53,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem">
+        <span style="font-size:2rem">🛡️</span>
+      </div>
+
+      <h2 class="mb-4">
+        Garantia de <span class="text-gradient">7 Dias</span>
+      </h2>
+
+      <p style="font-size:1.125rem;color:rgba(255,255,255,0.7);max-width:42rem;margin:0 auto 2rem">
+        Teste o programa por 7 dias. Se não for para você, devolvemos <span style="color:#ff6b35;font-weight:700">100% do valor</span>. Sem perguntas. Sem burocracia.
+      </p>
+
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem">
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span style="color:#ff6b35">🛡️</span>
+          <span style="font-size:0.875rem">100% Seguro</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span style="color:#ff6b35">⏰</span>
+          <span style="font-size:0.875rem">7 Dias</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span style="color:#ff6b35">🔄</span>
+          <span style="font-size:0.875rem">Sem Burocracia</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <span style="color:#ff6b35">✓</span>
+          <span style="font-size:0.875rem">Garantia Total</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Testimonials Section -->
+  <section id="testimonials" class="py-20 loading">
+    <div class="container" style="max-width:72rem">
+      <div class="text-center mb-12">
+        <h2 class="mb-4">
+          O que nossos <span class="text-gradient">alunos</span> estão dizendo
+        </h2>
+        <p style="color:rgba(255,255,255,0.6)">
+          Histórias reais de transformação de quem já domina a arte de apresentar
+        </p>
+      </div>
+
+      <div data-carousel data-slides="1" data-loop class="mb-12">
+        <div data-carousel-track>
+          <!-- Depoimento 1 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e0ece33aa061d9cb93d"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+
+          <!-- Depoimento 2 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e0af415b42f2b12603b"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+
+          <!-- Depoimento 3 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e160cac63a72de64c13"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+
+          <!-- Depoimento 4 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e12f415b42f2b12604f"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+        </div>
+        <button data-carousel-prev>←</button>
+        <button data-carousel-next>→</button>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
+          QUERO FAZER PARTE →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-20 loading" data-section="faq" style="background:rgba(255,255,255,0.02)">
+    <div class="container" style="max-width:56rem">
+      <div class="text-center mb-12">
+        <div style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.5rem 1rem;border-radius:9999px;margin-bottom:1.5rem">
+          <span>?</span>
+          <span style="font-size:0.875rem;font-weight:700">DÚVIDAS FREQUENTES</span>
+        </div>
+
+        <h2 class="mb-4">
+          Perguntas<br>
+          <span class="text-gradient">Frequentes</span>
+        </h2>
+      </div>
+
+      <div class="faq-accordion" style="margin-bottom:3rem"></div>
+
+      <div class="text-center">
+        <p style="color:rgba(255,255,255,0.6);margin-bottom:1rem">Ainda tem dúvidas?</p>
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
+          QUERO COMEÇAR AGORA →
+        </a>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.75rem">Garantia de 7 dias ou seu dinheiro de volta</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.06);padding:3rem 0">
+    <div class="container text-center">
+      <p style="color:rgba(255,255,255,0.4);font-size:0.875rem">
+        © 2025 F5 Estratégia - Comunicação: O Discurso do Líder. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Load VTurb players -->
+  <script>
+    // Main VSL player
+    const vturbScript = document.createElement('script');
+    vturbScript.src = 'https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/693170b030e3e1f3170aac15/v4/player.js';
+    vturbScript.async = true;
+    document.head.appendChild(vturbScript);
+
+    // Testimonial players (lazy load)
+    const testimonialPlayers = [
+      'https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/693e3e0ece33aa061d9cb93d/v4/player.js',
+      'https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/693e3e0af415b42f2b12603b/v4/player.js',
+      'https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/693e3e160cac63a72de64c13/v4/player.js',
+      'https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/693e3e12f415b42f2b12604f/v4/player.js'
+    ];
+
+    // Load testimonial players when section is visible
+    const loadTestimonialPlayers = () => {
+      const testimonialsSection = document.getElementById('testimonials');
+      if (!testimonialsSection) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            testimonialPlayers.forEach(playerSrc => {
+              const script = document.createElement('script');
+              script.src = playerSrc;
+              script.async = true;
+              document.head.appendChild(script);
+            });
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '200px' });
+
+      observer.observe(testimonialsSection);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadTestimonialPlayers);
+    } else {
+      loadTestimonialPlayers();
+    }
+  </script>
+
+  <!-- Main application script -->
+  <script type="module" src="/js/main.js"></script>
