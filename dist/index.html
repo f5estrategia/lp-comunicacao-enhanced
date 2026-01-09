@@ -73,16 +73,20 @@
     @media(min-width:640px){.sm\:grid-2{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1024px){.lg\:grid-3{grid-template-columns:repeat(3,1fr)}}
 
-    /* Module cards responsive - Mobile First */
-    .module-card{max-width:800px;margin:0 auto;overflow:hidden}
-    .module-card-inner{display:flex;flex-direction:column;gap:0;align-items:stretch}
-    .module-card-image{background:rgba(255,107,53,0.1);width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .module-card-content{padding:1.25rem;flex:1}
+    /* Module cards - Horizontal 16:9 com hover */
+    .module-card{max-width:900px;margin:0 auto;overflow:hidden;cursor:pointer}
+    .module-card-thumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:0.5rem}
+    .module-card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+    .module-card-thumb:hover img{transform:scale(1.05)}
 
-    @media(min-width:640px){
-      .module-card-inner{flex-direction:row}
-      .module-card-image{min-width:240px;width:240px;aspect-ratio:auto}
-    }
+    .module-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.5) 50%,transparent 100%);display:flex;flex-direction:column;justify-content:space-between;padding:1.5rem;opacity:0;transition:opacity 0.3s ease}
+    .module-card-thumb:hover .module-card-overlay{opacity:1}
+
+    .module-card-number{position:absolute;bottom:1rem;left:1.5rem;font-size:3rem;font-weight:900;color:rgba(255,107,53,0.3);transition:all 0.3s ease}
+    .module-card-thumb:hover .module-card-number{color:#ff6b35;bottom:1.5rem}
+
+    .module-card-info{transform:translateY(20px);transition:transform 0.3s ease}
+    .module-card-thumb:hover .module-card-info{transform:translateY(0)}
   </style>
 
   <!-- Main CSS -->
@@ -186,6 +190,72 @@
             Não adianta ficar reclamando e nem mesmo ficar assistindo outras pessoas que sabem menos que você ter mais sucesso que você. <span class="text-gradient" style="font-weight:700">O que elas têm? Coragem.</span>
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Testimonials Section -->
+  <section id="testimonials" class="py-20 loading">
+    <div class="container" style="max-width:72rem">
+      <div class="text-center mb-12">
+        <h2 class="mb-4">
+          O que nossos <span class="text-gradient">alunos</span> estão dizendo
+        </h2>
+        <p style="color:rgba(255,255,255,0.6)">
+          Histórias reais de transformação de quem já domina a arte de apresentar
+        </p>
+      </div>
+
+      <div data-carousel data-slides="1" data-loop class="mb-12">
+        <div data-carousel-track>
+          <!-- Depoimento 1 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e0ece33aa061d9cb93d"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+
+          <!-- Depoimento 2 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e0af415b42f2b12603b"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+
+          <!-- Depoimento 3 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e160cac63a72de64c13"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+
+          <!-- Depoimento 4 -->
+          <div data-carousel-slide>
+            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
+              <vturb-smartplayer
+                id="vid-693e3e12f415b42f2b12604f"
+                style="display:block;margin:0 auto;width:100%;height:100%">
+              </vturb-smartplayer>
+            </div>
+          </div>
+        </div>
+        <button data-carousel-prev>←</button>
+        <button data-carousel-next>→</button>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
+          QUERO FAZER PARTE →
+        </a>
       </div>
     </div>
   </section>
@@ -449,146 +519,155 @@
       <div data-carousel data-slides="1" data-loop class="mb-12">
         <div data-carousel-track>
           <div data-carousel-slide>
-            <div class="card-glow module-card">
-              <div class="module-card-inner">
-                <div class="module-card-image">
-                  <img src="/assets/images/modules/modulo1-fundacao.jpg" alt="Módulo 1 - Fundação" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
-                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">01</span>
-                </div>
-                <div class="module-card-content">
-                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 1</span>
-                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">13 min</span>
+            <div class="module-card">
+              <div class="module-card-thumb">
+                <img src="/assets/images/modules/modulo1-fundacao.jpg" alt="Módulo 1 - Fundação" loading="lazy">
+                <span class="module-card-number">01</span>
+                <div class="module-card-overlay">
+                  <div style="opacity:0"></div>
+                  <div class="module-card-info">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+                      <span style="background:rgba(255,107,53,0.9);color:#fff;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 1</span>
+                      <span style="font-size:0.75rem;color:rgba(255,255,255,0.8)">13 min</span>
+                    </div>
+                    <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.75rem">FUNDAÇÃO: CONTEÚDO REINA</h3>
+                    <p style="font-size:0.875rem;color:rgba(255,255,255,0.9);margin-bottom:1rem">Técnicas de oratória são inúteis sem conteúdo relevante.</p>
+                    <ul style="list-style:none;padding:0;margin:0">
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Boas-vindas e apresentação</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Conteúdo - A Base de Tudo</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Nivelar por Baixo</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8)">→ Não Seja Intelectual</li>
+                    </ul>
                   </div>
-                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">FUNDAÇÃO: CONTEÚDO REINA</h3>
-                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Técnicas de oratória são inúteis sem conteúdo relevante.</p>
-                  <ul style="list-style:none;padding:0;margin:0">
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Boas-vindas e apresentação</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Conteúdo - A Base de Tudo</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Nivelar por Baixo</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Não Seja Intelectual</li>
-                  </ul>
                 </div>
               </div>
             </div>
           </div>
 
           <div data-carousel-slide>
-            <div class="card-glow module-card">
-              <div class="module-card-inner">
-                <div class="module-card-image">
-                  <img src="/assets/images/modules/modulo2-preparacao.jpg" alt="Módulo 2 - Preparação" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
-                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">02</span>
-                </div>
-                <div class="module-card-content">
-                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 2</span>
-                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">17 min</span>
+            <div class="module-card">
+              <div class="module-card-thumb">
+                <img src="/assets/images/modules/modulo2-preparacao.jpg" alt="Módulo 2 - Preparação" loading="lazy">
+                <span class="module-card-number">02</span>
+                <div class="module-card-overlay">
+                  <div style="opacity:0"></div>
+                  <div class="module-card-info">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+                      <span style="background:rgba(255,107,53,0.9);color:#fff;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 2</span>
+                      <span style="font-size:0.75rem;color:rgba(255,255,255,0.8)">17 min</span>
+                    </div>
+                    <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.75rem">PREPARAÇÃO: CHECKLIST ESTRATÉGICO</h3>
+                    <p style="font-size:0.875rem;color:rgba(255,255,255,0.9);margin-bottom:1rem">Framework jornalístico de 20 anos para estruturar apresentações.</p>
+                    <ul style="list-style:none;padding:0;margin:0">
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ 5W1H e Pirâmide Invertida</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Monte Seu Roteiro</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Priorize Informação</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8)">→ Storytelling na Prática</li>
+                    </ul>
                   </div>
-                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">PREPARAÇÃO: CHECKLIST ESTRATÉGICO</h3>
-                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Framework jornalístico de 20 anos para estruturar apresentações.</p>
-                  <ul style="list-style:none;padding:0;margin:0">
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ 5W1H e Pirâmide Invertida</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Monte Seu Roteiro</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Priorize Informação</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Storytelling na Prática</li>
-                  </ul>
                 </div>
               </div>
             </div>
           </div>
 
           <div data-carousel-slide>
-            <div class="card-glow module-card">
-              <div class="module-card-inner">
-                <div class="module-card-image">
-                  <img src="/assets/images/modules/modulo3-apresentacao.jpg" alt="Módulo 3 - Apresentação" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
-                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">03</span>
-                </div>
-                <div class="module-card-content">
-                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 3</span>
-                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">20 min</span>
+            <div class="module-card">
+              <div class="module-card-thumb">
+                <img src="/assets/images/modules/modulo3-apresentacao.jpg" alt="Módulo 3 - Apresentação" loading="lazy">
+                <span class="module-card-number">03</span>
+                <div class="module-card-overlay">
+                  <div style="opacity:0"></div>
+                  <div class="module-card-info">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+                      <span style="background:rgba(255,107,53,0.9);color:#fff;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 3</span>
+                      <span style="font-size:0.75rem;color:rgba(255,255,255,0.8)">20 min</span>
+                    </div>
+                    <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.75rem">APRESENTAÇÃO: DESAFIANDO O MEDO</h3>
+                    <p style="font-size:0.875rem;color:rgba(255,255,255,0.9);margin-bottom:1rem">Técnicas de TV ao vivo para dominar a ansiedade.</p>
+                    <ul style="list-style:none;padding:0;margin:0">
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ O Medo de Falar</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Preparação da Voz</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Linguagem Corporal</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Palavras Difíceis</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8)">→ Abertura e Fechamento</li>
+                    </ul>
                   </div>
-                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">APRESENTAÇÃO: DESAFIANDO O MEDO</h3>
-                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Técnicas de TV ao vivo para dominar a ansiedade.</p>
-                  <ul style="list-style:none;padding:0;margin:0">
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ O Medo de Falar</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Preparação da Voz</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Linguagem Corporal</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Palavras Difíceis</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Abertura e Fechamento</li>
-                  </ul>
                 </div>
               </div>
             </div>
           </div>
 
           <div data-carousel-slide>
-            <div class="card-glow module-card">
-              <div class="module-card-inner">
-                <div class="module-card-image">
-                  <img src="/assets/images/modules/modulo4-dominando.jpg" alt="Módulo 4 - Improviso" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
-                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">04</span>
-                </div>
-                <div class="module-card-content">
-                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 4</span>
-                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">16 min</span>
+            <div class="module-card">
+              <div class="module-card-thumb">
+                <img src="/assets/images/modules/modulo4-dominando.jpg" alt="Módulo 4 - Improviso" loading="lazy">
+                <span class="module-card-number">04</span>
+                <div class="module-card-overlay">
+                  <div style="opacity:0"></div>
+                  <div class="module-card-info">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+                      <span style="background:rgba(255,107,53,0.9);color:#fff;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 4</span>
+                      <span style="font-size:0.75rem;color:rgba(255,255,255,0.8)">16 min</span>
+                    </div>
+                    <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.75rem">DOMINANDO O IMPROVISO</h3>
+                    <p style="font-size:0.875rem;color:rgba(255,255,255,0.9);margin-bottom:1rem">O que fazer quando dá tudo errado ao vivo.</p>
+                    <ul style="list-style:none;padding:0;margin:0">
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ O Famoso Branco</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Técnicas de Respiração</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Pare de Pedir Desculpas</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ A Arte do Improviso</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8)">→ Lidando com Interrupções</li>
+                    </ul>
                   </div>
-                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">DOMINANDO O IMPROVISO</h3>
-                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">O que fazer quando dá tudo errado ao vivo.</p>
-                  <ul style="list-style:none;padding:0;margin:0">
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ O Famoso Branco</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Técnicas de Respiração</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Pare de Pedir Desculpas</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ A Arte do Improviso</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Lidando com Interrupções</li>
-                  </ul>
                 </div>
               </div>
             </div>
           </div>
 
           <div data-carousel-slide>
-            <div class="card-glow module-card">
-              <div class="module-card-inner">
-                <div class="module-card-image">
-                  <img src="/assets/images/modules/modulo5-engajamento.jpg" alt="Módulo 5 - Engajamento" loading="lazy" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.7">
-                  <span style="font-size:4rem;font-weight:900;color:#ff6b35;position:relative;z-index:1;text-shadow:0 2px 10px rgba(0,0,0,0.5)">05</span>
-                </div>
-                <div class="module-card-content">
-                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 5</span>
-                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">31 min</span>
+            <div class="module-card">
+              <div class="module-card-thumb">
+                <img src="/assets/images/modules/modulo5-engajamento.jpg" alt="Módulo 5 - Engajamento" loading="lazy">
+                <span class="module-card-number">05</span>
+                <div class="module-card-overlay">
+                  <div style="opacity:0"></div>
+                  <div class="module-card-info">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+                      <span style="background:rgba(255,107,53,0.9);color:#fff;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">MÓDULO 5</span>
+                      <span style="font-size:0.75rem;color:rgba(255,255,255,0.8)">31 min</span>
+                    </div>
+                    <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.75rem">ENGAJAMENTO DE LIDERANÇA</h3>
+                    <p style="font-size:0.875rem;color:rgba(255,255,255,0.9);margin-bottom:1rem">Como conquistar uma sala em 30 segundos.</p>
+                    <ul style="list-style:none;padding:0;margin:0">
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Criando Rapport</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Lidando com Objeções</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Posicionamento de Líder</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8);margin-bottom:0.375rem">→ Comunicação Digital</li>
+                      <li style="font-size:0.875rem;color:rgba(255,255,255,0.8)">→ Câmera e Gravação</li>
+                    </ul>
                   </div>
-                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">ENGAJAMENTO DE LIDERANÇA</h3>
-                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7);margin-bottom:1rem">Como conquistar uma sala em 30 segundos.</p>
-                  <ul style="list-style:none;padding:0;margin:0">
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Criando Rapport</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Lidando com Objeções</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Posicionamento de Líder</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">→ Comunicação Digital</li>
-                    <li style="font-size:0.875rem;color:rgba(255,255,255,0.6)">→ Câmera e Gravação</li>
-                  </ul>
                 </div>
               </div>
             </div>
           </div>
 
           <div data-carousel-slide>
-            <div class="card-glow module-card">
-              <div class="module-card-inner">
-                <div class="module-card-image">
-                  <span style="font-size:4rem;font-weight:900;color:#ff6b35">🎁</span>
+            <div class="module-card">
+              <div class="module-card-thumb">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,rgba(255,107,53,0.2),rgba(255,107,53,0.05));display:flex;align-items:center;justify-content:center">
+                  <span style="font-size:5rem">🎁</span>
                 </div>
-                <div class="module-card-content">
-                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-                    <span style="background:rgba(255,107,53,0.1);color:#ff6b35;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">BÔNUS</span>
-                    <span style="font-size:0.75rem;color:rgba(255,255,255,0.5)">12 min</span>
+                <span class="module-card-number" style="opacity:0">00</span>
+                <div class="module-card-overlay">
+                  <div style="opacity:0"></div>
+                  <div class="module-card-info">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+                      <span style="background:rgba(255,107,53,0.9);color:#fff;padding:0.25rem 0.75rem;border-radius:0.5rem;font-size:0.75rem;font-weight:700">BÔNUS</span>
+                      <span style="font-size:0.75rem;color:rgba(255,255,255,0.8)">12 min</span>
+                    </div>
+                    <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.75rem">SÍNTESE FINAL</h3>
+                    <p style="font-size:0.875rem;color:rgba(255,255,255,0.9)">Resumo executivo de tudo que você aprendeu para revisar sempre que precisar.</p>
                   </div>
-                  <h3 style="font-size:1.25rem;font-weight:900;color:#ff6b35;margin-bottom:0.5rem">SÍNTESE FINAL</h3>
-                  <p style="font-size:0.875rem;color:rgba(255,255,255,0.7)">Resumo executivo de tudo que você aprendeu para revisar sempre que precisar.</p>
                 </div>
               </div>
             </div>
@@ -652,11 +731,11 @@
       </div>
 
       <div class="card-glow" style="padding:3rem 2rem;border-radius:1rem;border:2px solid rgba(255,107,53,0.2);max-width:40rem;margin:0 auto 3rem">
-        <div style="text-align:center;margin-bottom:2rem">
-          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin-bottom:0.5rem">A partir de</p>
-          <p style="font-size:3.5rem;font-weight:900;color:#ff6b35;line-height:1">10x R$ 57,00</p>
-          <p style="font-size:1rem;color:rgba(255,255,255,0.7);margin-top:1rem">
-            ou <strong style="color:#ff6b35">R$ 475,00</strong> à vista
+        <div style="text-align:center;margin-bottom:2rem;padding:2rem;background:rgba(0,0,0,0.3);border-radius:0.75rem">
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.5);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em">Por apenas</p>
+          <p style="font-size:4rem;font-weight:900;color:#ff6b35;line-height:1;margin-bottom:0.5rem">5x de R$ 48</p>
+          <p style="font-size:1.125rem;color:rgba(255,255,255,0.7);margin-top:0.5rem">
+            Ou <strong style="color:#ff6b35">R$ 240</strong> à vista no cartão ou PIX
           </p>
         </div>
 
@@ -728,72 +807,6 @@
           <span style="color:#ff6b35">✓</span>
           <span style="font-size:0.875rem">Garantia Total</span>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Video Testimonials Section -->
-  <section id="testimonials" class="py-20 loading">
-    <div class="container" style="max-width:72rem">
-      <div class="text-center mb-12">
-        <h2 class="mb-4">
-          O que nossos <span class="text-gradient">alunos</span> estão dizendo
-        </h2>
-        <p style="color:rgba(255,255,255,0.6)">
-          Histórias reais de transformação de quem já domina a arte de apresentar
-        </p>
-      </div>
-
-      <div data-carousel data-slides="1" data-loop class="mb-12">
-        <div data-carousel-track>
-          <!-- Depoimento 1 -->
-          <div data-carousel-slide>
-            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
-              <vturb-smartplayer
-                id="vid-693e3e0ece33aa061d9cb93d"
-                style="display:block;margin:0 auto;width:100%;height:100%">
-              </vturb-smartplayer>
-            </div>
-          </div>
-
-          <!-- Depoimento 2 -->
-          <div data-carousel-slide>
-            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
-              <vturb-smartplayer
-                id="vid-693e3e0af415b42f2b12603b"
-                style="display:block;margin:0 auto;width:100%;height:100%">
-              </vturb-smartplayer>
-            </div>
-          </div>
-
-          <!-- Depoimento 3 -->
-          <div data-carousel-slide>
-            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
-              <vturb-smartplayer
-                id="vid-693e3e160cac63a72de64c13"
-                style="display:block;margin:0 auto;width:100%;height:100%">
-              </vturb-smartplayer>
-            </div>
-          </div>
-
-          <!-- Depoimento 4 -->
-          <div data-carousel-slide>
-            <div style="max-width:600px;margin:0 auto;aspect-ratio:9/16;background:rgba(255,255,255,0.02);border:1px solid rgba(255,107,53,0.1);border-radius:0.75rem;overflow:hidden">
-              <vturb-smartplayer
-                id="vid-693e3e12f415b42f2b12604f"
-                style="display:block;margin:0 auto;width:100%;height:100%">
-              </vturb-smartplayer>
-            </div>
-          </div>
-        </div>
-        <button data-carousel-prev>←</button>
-        <button data-carousel-next>→</button>
-      </div>
-
-      <div class="text-center">
-        <a href="#" class="btn-primary cta-button" data-url="https://pay.hotmart.com/M103064438P?bid=1764138358390">
-          QUERO FAZER PARTE →
-        </a>
       </div>
     </div>
   </section>
