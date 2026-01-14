@@ -164,6 +164,19 @@ export class Carousel {
     const offset = -(this.currentIndex * (slideWidth + this.options.gap));
 
     this.track.style.transform = `translateX(${offset}px)`;
+
+    // Emit custom event when slide changes
+    const currentSlide = this.slides[this.currentIndex];
+    if (currentSlide) {
+      const event = new CustomEvent('carousel:change', {
+        detail: {
+          index: this.currentIndex,
+          slide: currentSlide
+        },
+        bubbles: true
+      });
+      this.container.dispatchEvent(event);
+    }
   }
 
   public next(): void {
