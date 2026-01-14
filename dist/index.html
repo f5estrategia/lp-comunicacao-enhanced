@@ -11,9 +11,6 @@
   <link rel="dns-prefetch" href="https://images.converteai.net">
   <link rel="dns-prefetch" href="https://api.vturb.com.br">
 
-  <!-- VTurb Player Script - Load synchronously in head for Instagram compatibility -->
-  <script type="text/javascript" src="https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/6931672e8f0253bca66460a0/v4/player.js"></script>
-
   <!-- Critical: Preconnect hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +50,7 @@
 
     .vsl-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:1rem;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
     vturb-smartplayer{display:block;width:100%;height:100%}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
     .grid{display:grid;gap:1rem}
     .grid-2{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
@@ -111,6 +109,46 @@
 </head>
 
 <body>
+  <!-- Load VTurb Main Player Script -->
+  <script>
+    (function() {
+      const PLAYER_ID = 'vid-6931672e8f0253bca66460a0';
+      const SCRIPT_URL = 'https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/6931672e8f0253bca66460a0/v4/player.js';
+
+      // Create and load script
+      const s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = SCRIPT_URL;
+      s.async = true;
+
+      s.onload = function() {
+        console.log('VTurb script loaded');
+
+        // Wait for custom element to be defined
+        setTimeout(function() {
+          const container = document.getElementById('vsl-player-container');
+          if (container) {
+            // Create player element
+            const player = document.createElement('vturb-smartplayer');
+            player.id = PLAYER_ID;
+            player.style.cssText = 'display: block; margin: 0 auto; width: 100%;';
+
+            // Replace loading skeleton with player
+            container.innerHTML = '';
+            container.appendChild(player);
+
+            console.log('VTurb player injected');
+          }
+        }, 500);
+      };
+
+      s.onerror = function() {
+        console.error('Failed to load VTurb script');
+      };
+
+      document.head.appendChild(s);
+    })();
+  </script>
   <!-- Header -->
   <header>
     <div class="bg"></div>
@@ -133,8 +171,14 @@
           Assista ao vídeo e descubra como uma pessoa que falava "poblema" virou apresentador de TV — e como você pode dominar essa habilidade de forma prática.
         </p>
 
-        <div class="vsl-container mb-12" style="max-width:64rem;margin:0 auto">
-          <vturb-smartplayer id="vid-6931672e8f0253bca66460a0" style="display: block; margin: 0 auto; width: 100%;"></vturb-smartplayer>
+        <div id="vsl-player-container" class="vsl-container mb-12" style="max-width:64rem;margin:0 auto">
+          <!-- VTurb player will be injected here after script loads -->
+          <div style="width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center">
+            <div style="text-align:center;color:rgba(255,255,255,0.5)">
+              <div style="width:48px;height:48px;border:3px solid rgba(255,107,53,0.3);border-top-color:#ff6b35;border-radius:50%;margin:0 auto 1rem;animation:spin 1s linear infinite"></div>
+              <p style="font-size:0.875rem">Carregando apresentação...</p>
+            </div>
+          </div>
         </div>
 
         <div class="text-center mb-12">
