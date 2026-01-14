@@ -919,10 +919,18 @@
 
   <!-- VTurb Main Player Script -->
   <script type="text/javascript">
-    var s=document.createElement("script");
-    s.src="https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/6931672e8f0253bca66460a0/v4/player.js";
-    s.async=!0;
-    document.head.appendChild(s);
+    (function() {
+      var s=document.createElement("script");
+      s.src="https://scripts.converteai.net/de1f52b9-182e-4159-9b25-8c5e55b7fd12/players/6931672e8f0253bca66460a0/v4/player.js";
+      s.async=true;
+      s.onload = function() {
+        console.log('VTurb main player script loaded successfully');
+      };
+      s.onerror = function() {
+        console.error('Failed to load VTurb main player script');
+      };
+      document.head.appendChild(s);
+    })();
   </script>
 </body>
 </html>
